@@ -1,0 +1,76 @@
+﻿@page "/GlossaryWikepedia/{Htmldatas}"
+
+@attribute [Authorize]
+
+<b>@((MarkupString)SetHtmldata.Headhtml)</b>
+
+@if (isStartingText)
+{
+    <div class="d-flex flex-wrap justify-content-center mt-5" style="width:100%;height:100%;background-color:white;">
+        <div class="MeassageBox">
+            <h3>"Please enter search item."</h3>
+        </div>
+    </div>
+}
+
+@if (isLoadingData)
+{
+    <div class="loading-panel-wrapper">
+        <div class="loading-panel-overlay"></div>
+        <TelerikLoader Size="@LoaderSize.Medium" Type="@LoaderType.ConvergingSpinner" ThemeColor="@ThemeColors.Primary" />
+    </div>
+}
+
+
+@if (!string.IsNullOrWhiteSpace(SetHtmldata.Text))
+{
+
+    <div style="margin-left:5px;border-bottom: 1px dimgrey solid;">
+        <b class="Title">@((MarkupString)SetHtmldata.Title)</b>
+        <br>
+    </div>
+}
+
+<div>
+    @if (!string.IsNullOrWhiteSpace(SetHtmldata.Text))
+    {
+        <b class="EncylopidiaText">From Wikipedia the free encyclopedia</b>
+    }
+    <br>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(SetHtmldata.Text))
+{
+    <div class="d-flex my-2 " style="width:100%; border-color:lightgray; overflow-y: auto;padding-right: 13px;" id="WikipediaBox">
+
+        @*<div id="Wikitoptop"></div>*@
+        <div class="ContentBox d-flex flex-wrap">
+            <div class="ImageBox" style="height:100%;width:98%;background-color:black;opacity:0.8;padding: 20px;">
+                <i class="fa fa-times" aria-hidden="true" style="color: white;float: right;" @onclick="ClosePopUp"></i>
+                <div class="ImageBoxDescription">                 
+                    <img id="my_image" src=""  />
+                </div>
+                    <p id="ImageDescrption" style="color:white"> </p>
+            </div>
+            <b>@((MarkupString)SetHtmldata.Text)</b>
+
+            <br>
+            @if (SetHtmldata.Text != "No Record")
+            {
+                <p style="font-size:9px">
+
+                    "This article is copied from an <a href="https://en.wikipedia.org/wiki/@SetHtmldata.Title" target="_blank">article on Wikipedia®</a> - the free encyclopedia created and edited by its online user
+                    community. The text was not checked or edited by anyone on our staff. Although the vast majority of Wikipedia®
+                    encyclopedia articles provide accurate and timely information,please do not assume the accuracy of any
+                    particular article. This article is distributed under the terms of<a href="http://www.gnu.org/licenses/fdl-1.3.html" target="_blank"> GNU Free Documentation License.</a>"
+                </p>
+            }
+        </div>
+    </div>
+
+
+}
+
+
+
+
